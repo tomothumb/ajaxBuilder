@@ -46,6 +46,7 @@ function WP_AJAX_BUILDER(){
       $.ajax({
           type: 'GET',
           url: _self.getRequestURL(),
+          cache: false,
           dataType: 'json'
       }).done(function(json){
         _self.response = json;
