@@ -29,6 +29,7 @@ function WP_AJAX_BUILDER(){
             + _self.api.domain
             + _self.api.endpoint
             + '&' + _self.buildRequestQuery()
+    ;
     return url;
   };
 
