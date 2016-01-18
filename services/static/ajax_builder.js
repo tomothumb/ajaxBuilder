@@ -6,12 +6,14 @@ function AJAX_BUILDER(){
   _self.response = {};
   _self.api = {
     'protocol' : 'http',
-    'domain'   : 'example.com',
+    'domain'   : window.location.host,
     'endpoint' : '/get/data'
   };
 
   _self.apiparams = {
   };
+
+  _self.$formEle;
 
   _self.buildRequestQuery = function(){
     return $.param(_self.apiparams);
@@ -19,10 +21,10 @@ function AJAX_BUILDER(){
 
   _self.getRequestURL = function(){
     var url = _self.api.protocol + '://'
-        + _self.api.domain
-        + _self.api.endpoint
-        //+ '&' + _self.buildRequestQuery()
-    ;
+            + _self.api.domain
+            + _self.api.endpoint
+    //+ '&' + _self.buildRequestQuery()
+        ;
     return url;
   };
 
@@ -31,12 +33,19 @@ function AJAX_BUILDER(){
     setParam : function(obj){
       _self.apiparams = obj
     },
+    setProtocol : function(protocol) {
+      _self.api.protocol = protocol;
+    },
     setDomain : function(domain) {
       _self.api.domain = domain;
     },
     setEndpoint : function(endpoint) {
       _self.api.endpoint = endpoint;
     },
+    setForm : function(targetID) {
+      _self.$formEle = $(targetID);
+    },
+
 
     // AJAX実行
     get : function(){
@@ -46,6 +55,26 @@ function AJAX_BUILDER(){
         cache:false,
         dataType: 'json'
       }).done(function(json){
+        _self.response = json;
+        if(_self.callback){
+          _self.callback();
+        }
+        return _self.response;
+      }).fail(function(json){
+        // エラー
+        return json;
+      });
+    },
+
+    post : function(){
+      $.ajax({
+        type: 'POST',
+        url: _self.getRequestURL(),
+        data: _self.$formEle.serialize(),
+        cache:false,
+        dataType: 'json'
+      }).done(function(json){
+
         _self.response = json;
         if(_self.callback){
           _self.callback();
