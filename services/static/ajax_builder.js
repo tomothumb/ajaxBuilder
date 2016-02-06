@@ -1,6 +1,9 @@
 /*
- * This file is part of ajaxbuilder.
+ * Ajax Helper Library.
+ * v1.0.0
  * (c) 2015-2016 Tomoyuki Tsujimoto
+ * https://github.com/tomothumb/ajaxBuilder
+ *
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +16,7 @@ function AJAX_BUILDER(){
 
   _self.response = {};
   _self.api = {
-    'protocol' : 'http',
+    'protocol' : window.location.protocol,
     'domain'   : window.location.host,
     'endpoint' : '/get/data'
   };
@@ -44,7 +47,13 @@ function AJAX_BUILDER(){
     setProtocol : function(protocol) {
       _self.api.protocol = protocol;
     },
+    protocol : function(protocol) {
+      _self.api.protocol = protocol;
+    },
     setDomain : function(domain) {
+      _self.api.domain = domain;
+    },
+    domain : function(domain) {
       _self.api.domain = domain;
     },
     setEndpoint : function(endpoint) {
@@ -82,7 +91,6 @@ function AJAX_BUILDER(){
         cache:false,
         dataType: 'json'
       }).done(function(json){
-
         _self.response = json;
         if(_self.callback){
           _self.callback();

@@ -1,6 +1,8 @@
 /*
  * This file is part of ajaxbuilder.
+ * v1.0.0
  * (c) 2015-2016 Tomoyuki Tsujimoto
+ * https://github.com/tomothumb/ajaxBuilder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,8 +18,8 @@ function WP_AJAX_BUILDER(){
 
   _self.response = {};
   _self.api = {
-    'protocol' : 'http',
-    'domain'   : 'example.com',
+    'protocol' : window.location.protocol,
+    'domain'   : window.location.host,
     'endpoint' : '/wp-json/posts?'
   };
 
@@ -47,17 +49,26 @@ function WP_AJAX_BUILDER(){
     setParam : function(obj){
       _self.apiparams = obj
     },
+    setProtocol : function(protocol) {
+      _self.api.protocol = protocol;
+    },
+    protocol : function(protocol) {
+      _self.api.protocol = protocol;
+    },
     setDomain : function(domain) {
+      _self.api.domain = domain;
+    },
+    domain : function(domain) {
       _self.api.domain = domain;
     },
 
     // AJAX実行
     get : function(){
       $.ajax({
-          type: 'GET',
-          url: _self.getRequestURL(),
-          cache: false,
-          dataType: 'json'
+        type: 'GET',
+        url: _self.getRequestURL(),
+        cache: false,
+        dataType: 'json'
       }).done(function(json){
         _self.response = json;
         if(_self.callback){
