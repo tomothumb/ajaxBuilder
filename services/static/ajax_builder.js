@@ -16,7 +16,7 @@ function AJAX_BUILDER(){
 
   _self.response = {};
   _self.api = {
-    'protocol' : window.location.protocol,
+    'protocol' : window.location.protocol.replace(/\:/,''),
     'domain'   : window.location.host,
     'endpoint' : '/get/data'
   };
